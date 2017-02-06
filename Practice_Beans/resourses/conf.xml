@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+ 
+ <bean id="olga" class="Manager">
+ 	<property name="name" value="Olga" />
+ </bean>
+ <bean id="anna" class="Manager">
+ 	<constructor-arg value="Anna"/>
+ </bean>
+ 
+ <bean id="mango" class="ClothStore">
+ 	<property name="name" value="Mango"/>
+ 	<property name="manager" ref="olga" />
+ </bean>
+ <bean id="pull" class="ClothStore">
+ 	<property name="name" value="PULLandBEAR"/>
+ 	<property name="manager" ref="anna" />
+ </bean>
+
+ <bean id="gulliver" class="ITRC"
+ init-method="open"
+ destroy-method="close">
+ 	<property name="name" value="Gulliver"/>
+ 	<property name="stores">
+	 	<list>
+ 			<ref bean="mango"/>
+ 			<ref bean="pull"/>
+ 		</list>
+	</property>
+ </bean>
+</beans>
