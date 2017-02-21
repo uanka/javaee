@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<bean id="user" class="history.User">
+		<property name="nickname" value="onlyone" />
+	</bean>
+	
+	<bean id="history" class="history.History"></bean>
+	
+	<aop:config>
+		<aop:aspect ref="history">
+			<aop:pointcut
+			expression="execution(* history.User.logOut())" 
+			id="logout"/>
+			<aop:before 
+			pointcut-ref="logout" 
+			method="logDate"/>
+			<aop:after
+			pointcut-ref="logout"
+			method="wasOnline"/>
+			<aop:after 
+			pointcut="execution(* history.User.logIn())"
+			method="loggedIn"/>
+		</aop:aspect>
+	</aop:config>
+			
+	<aop:aspectj-autoproxy/>
+	
+	
+	
+</beans>
